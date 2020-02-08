@@ -1,7 +1,8 @@
 address=https://apod.nasa.gov/apod/
-sedscript='s#^.*\(image.*\.jpg\).*$#'$address'\1#'
+datepattern="$(date +'%Y')"
 
+echo $datepattern
 wget -O - $address \
-| awk '/2020 February 8/{getline; getline; print}' \
-| sed -e  $sedscript\
+| awk '/'$datepattern'/{getline; getline; print}' \
+| sed -e  's#^.*\(image.*\.jpg\).*$#'$address'\1#'\
 | xargs wget
