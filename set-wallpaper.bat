@@ -1,1 +1,1 @@
-for /f "usebackq" %x in (`wsl bash download-apod.sh`) do set APOD_WP_FILENAME=%x
+for /f "usebackq" %%x in (`wsl bash download-apod.sh`) do set APOD_WP_FILENAME=%%x
