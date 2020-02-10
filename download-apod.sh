@@ -10,4 +10,7 @@ wget -O - $address \
     | sed -e 's#^.*\(image.*\.jpg\).*$#'$address'\1#'\
     | xargs wget -O - >> $path$filename 
 fi
+# if run on windows
 echo $winpath$filename
+# in run on linux
+xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitor0/image-path --set $path$filename
