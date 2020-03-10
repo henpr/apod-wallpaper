@@ -5,12 +5,18 @@ path=/mnt/d/HenryP/Pictures/apod
 winpath="d:/henryp/pictures/apod"
 test='<a href="image/2002/LaSillaLaPalma_Horalek_Casado_ZLCircle_viz_1500px.png">'
 echo $test | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#'$address'\1#'
+filenameOnPage=$(wget -O - $address | awk '/'$datepattern'/{getline; getline; print}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
+echo $filenameOnPage
+wget -O $path/$filename $address$filenameOnPage 
+echo $winpath/$filename
+
+
 #if [[ ! -f "$path$filename" ]]; then
-path=$(wget -O - $address \
-    | awk '/'$datepattern'/{getline; getline; print}' \
-    | sed -e 's#.*\(image.*\.png\).*#\1#'\
-    | xargs echo) # wget -O - >> $path$filename 
-echo $path
+# path=$(wget -O - $address \
+    # | awk '/'$datepattern'/{getline; getline; print}' \
+    # | sed -e 's#.*\(image.*\.png\).*#\1#'\
+    # | xargs echo) # wget -O - >> $path$filename 
+# echo $path
 #fi
 # if run on windows
 # echo $winpath/$filename
