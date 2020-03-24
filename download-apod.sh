@@ -3,13 +3,12 @@ datepattern="$(date +'%Y')"
 filename=$(date +'%Y-%m-%d').jpg
 path=/mnt/d/HenryP/Pictures/apod
 winpath="d:/henryp/pictures/apod"
-test='<a href="image/2002/LaSillaLaPalma_Horalek_Casado_ZLCircle_viz_1500px.png">'
-echo $test | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#'$address'\1#'
-filenameOnPage=$(wget -O - $address | awk '/'$datepattern'/{getline; getline; print}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
-echo $filenameOnPage
+#test='<a href="image/2002/LaSillaLaPalma_Horalek_Casado_ZLCircle_viz_1500px.png">'
+#echo $test | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#'$address'\1#'
+filenameOnPage=$(wget -O - $address | awk '/'$datepattern'/{getline; getline; print; exit}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
+#echo $filenameOnPage
 wget -O $path/$filename $address$filenameOnPage 
 echo $winpath/$filename
-
 
 #if [[ ! -f "$path$filename" ]]; then
 # path=$(wget -O - $address \
