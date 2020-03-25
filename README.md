@@ -6,8 +6,8 @@ this downloads the current nasa astronomy picture of the day and sets it to wall
 
 When you run from Windows, you will have to set up the `config.txt` manually with the following values:
 
- APOD_DIR=<UNIX_DIRECTORY_FOR_PICTURES>
- WIN_APOD_DIR=<WINDOWS_DIRECTORY_FOR_PICTURES>
+    APOD_DIR=<UNIX_DIRECTORY_FOR_PICTURES>
+    WIN_APOD_DIR=<WINDOWS_DIRECTORY_FOR_PICTURES>
 
 Both directories have to be the same on the file system, so windows can access the pictures downloaded by Linux (via WSL or MinGW or whatever). 
 
