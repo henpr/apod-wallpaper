@@ -47,12 +47,22 @@ winpath="$WIN_APOD_DIR"
 if [ ! -f "$path/$filename" ]
 then
     filenameOnPage=$(wget -O - $address | awk '/'$datepattern'/{getline; getline; print}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
-    wget -O $path/$filename $address$filenameOnPage 
+    if [ $? != 0 ]
+    then
+        connect_failed = true
+    else
+        wget -O $path/$filename $address$filenameOnPage 
+    fi
 fi
 
-if [ $run_from_windows = 1 ]
+if [ connect_failed != true ]
 then
-    echo $winpath/$filename
+    if [ $run_from_windows = 1 ]
+    then
+        echo $winpath/$filename
+    else
+        xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitoreDP1/workspace0/last-image --set $path/$filename
+    fi
 else
-    xfconf-query --channel xfce4-desktop --property /backdrop/screen0/monitoreDP1/workspace0/last-image --set $path/$filename
+    echo "error: could not connect to nasa!"
 fi
