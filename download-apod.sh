@@ -1,19 +1,17 @@
-if [[ ! -z "$1" && "$1" = "WIN" ]]
-then
-    run_from_windows=1
-else
-    run_from_windows=0
-fi
+force=false 
+run_from_windows=false
 
 for arg in $@ 
 do
-    if [ "$arg" = "--force" ]
+    if [ $arg = "--force" ]
     then
         force=true
+    elif [ $arg = "--windows" ]
+        run_from_windows=true
     fi
 done
 
-if [ ! $run_from_windows = 1 ]
+if [ $run_from_windows = false ]
 then
     echo "***************************************"
     echo "**         APOD Wallpaper            **"
@@ -66,7 +64,7 @@ fi
 
 if [ "$connect_failed" != true ]
 then
-    if [ $run_from_windows = 1 ]
+    if [ "$run_from_windows" = true ]
     then
         echo $winpath/$filename
     else
