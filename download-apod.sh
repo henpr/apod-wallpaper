@@ -52,7 +52,7 @@ filename=$(date +'%Y-%m-%d').jpg
 path="$APOD_DIR"
 winpath="$WIN_APOD_DIR"
 
-if [ ! -f "$path/$filename" ] || [ force = true ]
+if [ ! -f "$path/$filename" || "$force" = true ]
 then
     apodPage=$(wget -O - $address)
     if [ $? != 0 ]
@@ -61,9 +61,10 @@ then
         exit 1
     fi
     filenameOnPage=$(echo "$apodPage" | awk '/'$datepattern'/{getline; getline; print; exit}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
+    wget -O $path/$filename $address$filenameOnPage 
 fi
 
-if [ connect_failed != true ]
+if [ "$connect_failed" != true ]
 then
     if [ $run_from_windows = 1 ]
     then
