@@ -5,6 +5,14 @@ else
     run_from_windows=0
 fi
 
+for arg in $@ 
+do
+    if [ "$arg" = "--force" ]
+    then
+        force=true
+    fi
+done
+
 if [ ! $run_from_windows = 1 ]
 then
     echo "***************************************"
@@ -44,7 +52,7 @@ filename=$(date +'%Y-%m-%d').jpg
 path="$APOD_DIR"
 winpath="$WIN_APOD_DIR"
 
-if [ ! -f "$path/$filename" ]
+if [ ! -f "$path/$filename" || "$force" = true ]
 then
     apodPage=$(wget -O - $address)
     if [ $? != 0 ]
@@ -53,9 +61,10 @@ then
         exit 1
     fi
     filenameOnPage=$(echo "$apodPage" | awk '/'$datepattern'/{getline; getline; print; exit}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
+    wget -O $path/$filename $address$filenameOnPage 
 fi
 
-if [ connect_failed != true ]
+if [ "$connect_failed" != true ]
 then
     if [ $run_from_windows = 1 ]
     then
