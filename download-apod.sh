@@ -44,21 +44,16 @@ filename=$(date +'%Y-%m-%d').jpg
 path="$APOD_DIR"
 winpath="$WIN_APOD_DIR"
 
-# if [ ! -f "$path/$filename" ]
-# then
+if [ ! -f "$path/$filename" ]
+then
     apodPage=$(wget -O - $address)
     if [ $? != 0 ]
     then
         echo "error: could not connect to nasa!"
         exit 1
     fi
-    echo $apodPage
-    #filenameOnPage=$(wget -O - $address | awk '/'$datepattern'/{getline; getline; print}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
-    filenameOnPage=$(echo $apodPage | awk '/'$datepattern'/{getline; getline; print}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
-
-    echo $filenameOnPage
-    exit
-# fi
+    filenameOnPage=$(echo "$apodPage" | awk '/'$datepattern'/{getline; getline; print; exit}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
+fi
 
 if [ connect_failed != true ]
 then
