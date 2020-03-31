@@ -7,6 +7,7 @@ do
     then
         force=true
     elif [ $arg = "--windows" ]
+    then
         run_from_windows=true
     fi
 done
@@ -64,7 +65,7 @@ fi
 
 if [ "$connect_failed" != true ]
 then
-    if [ "$run_from_windows" = true ]
+    if [ $run_from_windows = true ]
     then
         echo $winpath/$filename
     else
