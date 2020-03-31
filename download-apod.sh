@@ -51,7 +51,7 @@ filename=$(date +'%Y-%m-%d').jpg
 path="$APOD_DIR"
 winpath="$WIN_APOD_DIR"
 
-if [ ! -f "$path/$filename" || "$force" = true ]
+if [ ! -f "$path/$filename" ] || [ "$force" = true ]
 then
     apodPage=$(wget -O - $address)
     if [ $? != 0 ]
