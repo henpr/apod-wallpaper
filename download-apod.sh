@@ -61,6 +61,9 @@ then
     fi
     filenameOnPage=$(echo "$apodPage" | awk '/'$datepattern'/{getline; getline; print; exit}' | sed -e 's#.*\(image.*\(\.png\|\.jpg\)\).*#\1#')
     wget -O $path/$filename $address$filenameOnPage 
+elif [ $run_from_windows = false ]
+then
+    echo "File already exists -- nothing to do."
 fi
 
 if [ "$connect_failed" != true ]
